@@ -28,17 +28,11 @@ namespace EasyNews.WebUI.Controllers
             this.SQLRepository = SQLRepository;
             this.filterRepository = filterRepository;
         }
-
-        public PartialViewResult _HeaderNavbar()
-        {
-            return PartialView(filterRepository.Collection());
-        }
-
         
         public ActionResult Index()
         {
             GuardianWebServices guardianServices = new GuardianWebServices();
-
+            
             using (WebClient web = new WebClient())
             {
                 web.Encoding = Encoding.UTF8;
@@ -52,7 +46,7 @@ namespace EasyNews.WebUI.Controllers
                 var json = web.DownloadString(url);
 
                 GuardianJSON guardianJSON = JsonConvert.DeserializeObject<GuardianJSON>(json);
-
+                repository.Clear();
                 foreach (var content in guardianJSON.response.results)
                 {
 
@@ -80,8 +74,10 @@ namespace EasyNews.WebUI.Controllers
                     {
                         content.fields.trailText = "Pretty old stuff fam!";
                     }
+
                     repository.Insert(content);
                 }
+
                 repository.Commit();
                 this.guardianJSON = guardianJSON;
             }
@@ -185,6 +181,35 @@ namespace EasyNews.WebUI.Controllers
         {
             GuardianFields result = SQLRepository.Find(shortUrl);
             return View(result);
+        }
+
+        public ActionResult _HeaderNavbar(GuardianFilterViewModel model)
+        {
+            if (filterRepository.Collection().Count() == 0)
+            {
+                model.shortUrl = model.localID;
+                filterRepository.Insert(model);
+                filterRepository.Commit();
+            }
+            else
+            {
+                GuardianFilterViewModel returnModel = filterRepository.Collection().First();
+                if (model.Sections.ClickedSectionList != "Section")
+                {
+                    returnModel.Sections.ClickedSectionList = model.Sections.ClickedSectionList;
+                    returnModel.OrderBy.ClickedOrderByItem = model.OrderBy.ClickedOrderByItem;
+                    returnModel.SearchContent = model.SearchContent;
+                    returnModel.PageSize = model.PageSize;
+                    filterRepository.Update(returnModel);
+                    filterRepository.Commit();
+                    return View(returnModel);
+                }
+                else
+                {
+                    return View(returnModel);
+                }
+            } 
+            return View(model);
         }
     }
 }

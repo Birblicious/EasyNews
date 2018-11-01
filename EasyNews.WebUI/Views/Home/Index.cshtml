@@ -3,13 +3,6 @@
     ViewBag.Title = "Home Page";
 }
 
-@using (Html.BeginForm("Index", "Home"))
-{
-    <div>
-        @Html.Partial("_HeaderNavbar", new EasyNews.Core.ViewModels.GuardianFilterViewModel())
-    </div>
-}
-
 @foreach (var content in Model.response.results)
 {
     <div class="row">
@@ -38,17 +31,19 @@
             <p class="text-justify"> @Html.Raw(content.fields.screenStory.ToString()) </p>
         </div>
 
-        <div class="col-1" style="background-color:cornsilk">
-            <div class="row" style="margin-top:250px"></div>
-
-            <a href="
-               @(content.fields.isSaved == true ?
-        Url.Action("Delete", new { localID = content.localID, shortUrl = content.fields.shortUrl, actionName = "Index" }) :
-        Url.Action("Save", new { localID = content.localID, shortUrl = content.fields.shortUrl, actionName = "Index" }))
-               "
-               class="@(content.fields.isSaved == true ? "btn btn-danger" : "btn btn-success")">
-                @Html.Raw(content.fields.isSaved == true ? "<i class='fas fa-minus-square'></i>" : "<i class='far fa-save'></i>")
-            </a>
+        <div class="col-1" style="background-color:cornsilk; display: flex">
+            <div class="d-flex justify-content-center">
+                <a href="
+                       @(content.fields.isSaved == true ?
+                Url.Action("Delete", new { localID = content.localID, shortUrl = content.fields.shortUrl, actionName = "Index" }) :
+                Url.Action("Save", new { localID = content.localID, shortUrl = content.fields.shortUrl, actionName = "Index" }))
+                       "
+                   class="@(content.fields.isSaved == true ? "btn btn-danger" : "btn btn-success")"
+                   style="height:40px; align-self:center"
+                   >
+                    @Html.Raw(content.fields.isSaved == true ? "<i class='fas fa-minus-square'></i>" : "<i class='far fa-save'></i>")
+                </a>
+            </div>
         </div>
 
     </div>

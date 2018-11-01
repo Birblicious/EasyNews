@@ -4,56 +4,54 @@
     ViewBag.Title = "SavedNews";
 }
 
-<h2>SavedNews</h2>
+<div class="row justify-content-center">
+    <h2><i class='fas fa-book-reader'></i> My News</h2>
+</div>
 
-@using (Html.BeginForm("Index", "Home"))
-{
-    <div>
-        @Html.Partial("_HeaderNavbar", new EasyNews.Core.ViewModels.GuardianFilterViewModel())
-    </div>
-}
+<hr />
 
 @foreach (var content in Model)
 {
-    <div class="row">
-        <div class="col-2 text-center" style="background-color:bisque; color:brown">
-            <div class="row" style="margin-top:70%">
+<div class="row">
+    <div class="col-2 text-center" style="background-color:bisque; color:brown">
+        <div class="row" style="margin-top:70%">
 
+        </div>
+        <p class="text-center text-capitalize" style="margin-top:10%; font-family: Oswald">Section: @content.sectionId</p>
+        <p class="text-center" style="margin-top:10%; font-family: Oswald">Published: @content.firstPublicationDate</p>
+        <p class="text-center" style="margin-top:10%; font-family: Oswald">Author: @content.byline</p>
+        <p class="text-center" style="margin-top:10%; font-family: Oswald">Words: @content.wordcount</p>
+    </div>
+
+    <div class="card col-4">
+        <img class="card-img-top" src="@content.thumbnail" alt="Card image cap">
+        <div class="card-body" style="font-family: Philosopher">
+            <h5 class="card-title text-justify" style="font-weight: bold"> @Html.Raw(content.headline.ToString())</h5>
+            <p class="text-justify"> @Html.Raw(content.trailText.ToString()) </p>
+            <div class="d-flex justify-content-end">
+                <a href="@Url.Action("SavedNewsDetails", new { shortUrl = content.shortUrl })" class="btn btn-info">Read</a>
             </div>
-            <p class="text-center text-capitalize" style="margin-top:10%; font-family: Oswald">Section: @content.sectionId</p>
-            <p class="text-center" style="margin-top:10%; font-family: Oswald">Published: @content.firstPublicationDate</p>
-            <p class="text-center" style="margin-top:10%; font-family: Oswald">Author: @content.byline</p>
-            <p class="text-center" style="margin-top:10%; font-family: Oswald">Words: @content.wordcount</p>
         </div>
+    </div>
 
-        <div class="card col-4">
-            <img class="card-img-top" src="@content.thumbnail" alt="Card image cap">
-            <div class="card-body" style="font-family: Philosopher">
-                <h5 class="card-title text-justify" style="font-weight: bold"> @Html.Raw(content.headline.ToString())</h5>
-                <p class="text-justify"> @Html.Raw(content.trailText.ToString()) </p>
-                <div class="d-flex justify-content-end">
-                    <a href="@Url.Action("SavedNewsDetails", new { shortUrl = content.shortUrl })" class="btn btn-info">Read</a>
-                </div>
-            </div>
-        </div>
+    <div class="col-5" style="background-color:ghostwhite; font-family: Philosopher">
+        <p class="text-justify"> @Html.Raw(content.screenStory.ToString()) </p>
+    </div>
 
-        <div class="col-5" style="background-color:ghostwhite; font-family: Philosopher">
-            <p class="text-justify"> @Html.Raw(content.screenStory.ToString()) </p>
-        </div>
-
-        <div class="col-1" style="background-color:cornsilk">
-            <div class="row" style="margin-top:250px"></div>
-
+    <div class="col-1" style="background-color:cornsilk; display: flex">
+        <div class="d-flex justify-content-center">
             <a href="
-               @(content.isSaved == true ?
-        Url.Action("Delete", new { localID = content.localID, shortUrl = content.shortUrl, actionName = "SavedNews" }) :
-        Url.Action("Save", new { localID = content.localID, shortUrl = content.shortUrl, actionName = "SavedNews" }))
-               "
-               class="@(content.isSaved == true ? "btn btn-danger" : "btn btn-success")">
+                       @(content.isSaved == true ?
+                Url.Action("Delete", new { localID = content.localID, shortUrl = content.shortUrl, actionName = "Index" }) :
+                Url.Action("Save", new { localID = content.localID, shortUrl = content.shortUrl, actionName = "Index" }))
+                       "
+               class="@(content.isSaved == true ? "btn btn-danger" : "btn btn-success")"
+               style="height:40px; align-self:center">
                 @Html.Raw(content.isSaved == true ? "<i class='fas fa-minus-square'></i>" : "<i class='far fa-save'></i>")
             </a>
         </div>
-
     </div>
+
+</div>
     <hr />
 }

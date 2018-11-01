@@ -18,7 +18,12 @@
 </head>
 
 <body>
-
+    @using (Html.BeginForm("Index", "Home", FormMethod.Post))
+    {
+        <div>
+            @{ Html.RenderAction("_HeaderNavbar", "Home");}
+        </div>
+    }
     <div class="container body-content">
         @RenderBody()
         <hr />

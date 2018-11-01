@@ -4,19 +4,28 @@
     ViewBag.Title = "SavedNewsDetails";
 }
 
-<h2>SavedNewsDetails</h2>
+<div class="row justify-content-center">
+    <h2><i class="far fa-bookmark"></i> News Detail</h2>
+</div>
 
-@using (Html.BeginForm("Index", "Home"))
-{
-    <div>
-        @Html.Partial("_HeaderNavbar", new EasyNews.Core.ViewModels.GuardianFilterViewModel())
-    </div>
-}
+<hr />
+<hr style="background-color:gold" />
+<hr />
+
 
 <div style="font-family: philosopher">
-    <h2>@Html.Raw(Model.headline)</h2>
-    <hr />
-    @Html.Raw(Model.main)
-    <hr />
-    @Html.Raw(Model.body)
+    
+    <div class="row justify-content-center">
+        <h2>@Html.Raw(Model.headline)</h2>
+    </div>
+    <div class="text-justify">
+        <hr />
+        <div class="row justify-content-center">
+            @Html.Raw(Model.main)
+        </div>
+
+        <hr />
+        @Html.Raw(Model.body)
+    </div>
+
 </div>

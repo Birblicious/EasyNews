@@ -63,5 +63,10 @@ namespace EasyNews.SQLRepository
             catch (Exception ex) { }
             
         }
+
+        public void Clear()
+        {
+            throw new NotImplementedException();
+        }
     }
 }
