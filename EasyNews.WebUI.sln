@@ -5,7 +5,13 @@ VisualStudioVersion = 15.0.28010.2016
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EasyNews.WebUI", "EasyNews.WebUI\EasyNews.WebUI.csproj", "{8F7ACAED-2357-4A41-8D83-7D13993BA7B0}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EasyNews.WebUI.Tests", "EasyNews.WebUI.Tests\EasyNews.WebUI.Tests.csproj", "{6F59A49D-34CB-4D31-81B6-6872AF4DE0D2}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EasyNews.Core", "EasyNews.Core\EasyNews.Core.csproj", "{BE061DAD-58CD-4F6F-868C-57233F097B3D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EasyNews.SQLRepository", "EasyNews.SQLRepository\EasyNews.SQLRepository.csproj", "{8AC37714-68A4-4C0A-B6C5-B14669747B34}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EasyNews.InMemoryRepository", "EasyNews.InMemoryRepository\EasyNews.InMemoryRepository.csproj", "{CBFE3A3E-B981-4029-96CF-16ED7CE4498B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EasyNews.Services", "EasyNews.Services\EasyNews.Services.csproj", "{D3D2947A-13CE-41AE-941F-E720324DAED7}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -17,10 +23,22 @@ Global
 		{8F7ACAED-2357-4A41-8D83-7D13993BA7B0}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8F7ACAED-2357-4A41-8D83-7D13993BA7B0}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{8F7ACAED-2357-4A41-8D83-7D13993BA7B0}.Release|Any CPU.Build.0 = Release|Any CPU
-		{6F59A49D-34CB-4D31-81B6-6872AF4DE0D2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{6F59A49D-34CB-4D31-81B6-6872AF4DE0D2}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{6F59A49D-34CB-4D31-81B6-6872AF4DE0D2}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{6F59A49D-34CB-4D31-81B6-6872AF4DE0D2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BE061DAD-58CD-4F6F-868C-57233F097B3D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BE061DAD-58CD-4F6F-868C-57233F097B3D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BE061DAD-58CD-4F6F-868C-57233F097B3D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BE061DAD-58CD-4F6F-868C-57233F097B3D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8AC37714-68A4-4C0A-B6C5-B14669747B34}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8AC37714-68A4-4C0A-B6C5-B14669747B34}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8AC37714-68A4-4C0A-B6C5-B14669747B34}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8AC37714-68A4-4C0A-B6C5-B14669747B34}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CBFE3A3E-B981-4029-96CF-16ED7CE4498B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CBFE3A3E-B981-4029-96CF-16ED7CE4498B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CBFE3A3E-B981-4029-96CF-16ED7CE4498B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CBFE3A3E-B981-4029-96CF-16ED7CE4498B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D3D2947A-13CE-41AE-941F-E720324DAED7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D3D2947A-13CE-41AE-941F-E720324DAED7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D3D2947A-13CE-41AE-941F-E720324DAED7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D3D2947A-13CE-41AE-941F-E720324DAED7}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

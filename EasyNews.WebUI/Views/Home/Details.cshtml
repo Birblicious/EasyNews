@@ -1,0 +1,21 @@
+﻿@model EasyNews.Core.Models.GuardianFields
+
+@{
+    ViewBag.Title = "Details";
+}
+
+@using (Html.BeginForm("Index", "Home"))
+{
+    <div>
+        @Html.Partial("_HeaderNavbar", new EasyNews.Core.ViewModels.GuardianFilterViewModel())
+    </div>
+}
+
+<div style="font-family: philosopher">
+    <h2>@Html.Raw(Model.headline)</h2>
+    <hr />
+    @Html.Raw(Model.main)
+    <hr />
+    @Html.Raw(Model.body)
+</div>
+

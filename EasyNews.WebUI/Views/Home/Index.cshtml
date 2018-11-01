@@ -1,31 +1,59 @@
-﻿@{
+﻿@model EasyNews.Core.Models.GuardianJSON
+@{
     ViewBag.Title = "Home Page";
 }
 
-<div class="jumbotron">
-    <h1>ASP.NET</h1>
-    <p class="lead">ASP.NET is a free web framework for building great Web sites and Web applications using HTML, CSS and JavaScript.</p>
-    <p><a href="https://asp.net" class="btn btn-primary btn-lg">Learn more &raquo;</a></p>
-</div>
+@using (Html.BeginForm("Index", "Home"))
+{
+    <div>
+        @Html.Partial("_HeaderNavbar", new EasyNews.Core.ViewModels.GuardianFilterViewModel())
+    </div>
+}
 
-<div class="row">
-    <div class="col-md-4">
-        <h2>Getting started</h2>
-        <p>
-            ASP.NET MVC gives you a powerful, patterns-based way to build dynamic websites that
-            enables a clean separation of concerns and gives you full control over markup
-            for enjoyable, agile development.
-        </p>
-        <p><a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkId=301865">Learn more &raquo;</a></p>
+@foreach (var content in Model.response.results)
+{
+    <div class="row">
+        <div class="col-2 text-center" style="background-color:bisque; color:brown">
+            <div class="row" style="margin-top:70%">
+
+            </div>
+            <p class="text-center text-capitalize" style="margin-top:10%; font-family: Oswald">Section: @content.sectionId</p>
+            <p class="text-center" style="margin-top:10%; font-family: Oswald">Published: @content.fields.firstPublicationDate</p>
+            <p class="text-center" style="margin-top:10%; font-family: Oswald">Author: @content.fields.byline</p>
+            <p class="text-center" style="margin-top:10%; font-family: Oswald">Words: @content.fields.wordcount</p>
+        </div>
+
+        <div class="card col-4">
+            <img class="card-img-top" src="@content.fields.thumbnail" alt="Card image cap">
+            <div class="card-body" style="font-family: Philosopher">
+                <h5 class="card-title text-justify" style="font-weight: bold"> @Html.Raw(content.webTitle.ToString())</h5>
+                <p class="text-justify"> @Html.Raw(content.fields.trailText.ToString()) </p>
+                <div class="d-flex justify-content-end">
+                    <a href="@Url.Action("Details", new { shortUrl = content.shortUrl })" class="btn btn-info">Read</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-5" style="background-color:ghostwhite; font-family: Philosopher">
+            <p class="text-justify"> @Html.Raw(content.fields.screenStory.ToString()) </p>
+        </div>
+
+        <div class="col-1" style="background-color:cornsilk">
+            <div class="row" style="margin-top:250px"></div>
+
+            <a href="
+               @(content.fields.isSaved == true ?
+        Url.Action("Delete", new { localID = content.localID, shortUrl = content.fields.shortUrl, actionName = "Index" }) :
+        Url.Action("Save", new { localID = content.localID, shortUrl = content.fields.shortUrl, actionName = "Index" }))
+               "
+               class="@(content.fields.isSaved == true ? "btn btn-danger" : "btn btn-success")">
+                @Html.Raw(content.fields.isSaved == true ? "<i class='fas fa-minus-square'></i>" : "<i class='far fa-save'></i>")
+            </a>
+        </div>
+
     </div>
-    <div class="col-md-4">
-        <h2>Get more libraries</h2>
-        <p>NuGet is a free Visual Studio extension that makes it easy to add, remove, and update libraries and tools in Visual Studio projects.</p>
-        <p><a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkId=301866">Learn more &raquo;</a></p>
-    </div>
-    <div class="col-md-4">
-        <h2>Web Hosting</h2>
-        <p>You can easily find a web hosting company that offers the right mix of features and price for your applications.</p>
-        <p><a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkId=301867">Learn more &raquo;</a></p>
-    </div>
-</div>
+    <hr />
+}
+
+
+
