@@ -48,7 +48,7 @@ namespace EasyNews.WebUI
             // TODO: Register your type's mappings here.
             // container.RegisterType<IProductRepository, ProductRepository>();
             container.RegisterType<IRepository<GuardianResults>, InMemoryRepository<GuardianResults>>();
-            container.RegisterType<IRepository<GuardianFilterViewModel>, InMemoryRepository<GuardianFilterViewModel>>();
+            container.RegisterType<IRepository<GuardianFilterModel>, InMemoryRepository<GuardianFilterModel>>();
             container.RegisterType<IRepository<GuardianFields>, SQLRepository<GuardianFields>>();
         }
     }

@@ -50,6 +50,14 @@
       <Project>{be061dad-58cd-4f6f-868c-57233f097b3d}</Project>
       <Name>EasyNews.Core</Name>
     </ProjectReference>
+    <ProjectReference Include="..\EasyNews.InMemoryRepository\EasyNews.InMemoryRepository.csproj">
+      <Project>{cbfe3a3e-b981-4029-96cf-16ed7ce4498b}</Project>
+      <Name>EasyNews.InMemoryRepository</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\EasyNews.SQLRepository\EasyNews.SQLRepository.csproj">
+      <Project>{8ac37714-68a4-4c0a-b6c5-b14669747b34}</Project>
+      <Name>EasyNews.SQLRepository</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

@@ -7,9 +7,9 @@ using System.Threading.Tasks;
 using EasyNews.Core.GuardianFilters;
 using EasyNews.Core.Models;
 
-namespace EasyNews.Core.ViewModels
+namespace EasyNews.Core.Models
 {
-    public class GuardianFilterViewModel : BaseModel
+    public class GuardianFilterModel : BaseModel
     {
         
         
@@ -25,7 +25,7 @@ namespace EasyNews.Core.ViewModels
         public List<GuardianOrderBy> OrderByList { get; set; }
         public GuardianOrderBy OrderBy { get; set; }
 
-        public GuardianFilterViewModel() {
+        public GuardianFilterModel() {
 
             PageSize = 10;
 

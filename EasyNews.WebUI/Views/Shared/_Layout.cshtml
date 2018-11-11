@@ -10,7 +10,7 @@
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/bootstrap")
     @Scripts.Render("~/Scripts/jquery.unobtrusive-ajax.min.js")
-    @RenderSection("scripts", required: false)
+
 
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.2/css/all.css" integrity="sha384-/rXc/GQVaYpyDdyxK+ecHPVYJSN9bmVFBvjA/9eOB+pb3F2w2N6fc5qB9Ew5yIns" crossorigin="anonymous">
     <link rel="stylesheet" type="text/css" href="http://fonts.googleapis.com/css?family=Oswald">
@@ -18,12 +18,7 @@
 </head>
 
 <body>
-    @using (Html.BeginForm("Index", "Home", FormMethod.Post))
-    {
-        <div>
-            @{ Html.RenderAction("_HeaderNavbar", "Home");}
-        </div>
-    }
+
     <div class="container body-content">
         @RenderBody()
         <hr />
@@ -32,6 +27,6 @@
         </footer>
     </div>
 
-
+    @RenderSection("scripts", required: false)
 </body>
 </html>

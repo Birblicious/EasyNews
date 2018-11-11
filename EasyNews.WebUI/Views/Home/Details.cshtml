@@ -1,7 +1,12 @@
-﻿@model EasyNews.Core.Models.GuardianFields
+﻿@model EasyNews.Core.ViewModels.GuardianDetailsViewModel
 
 @{
     ViewBag.Title = "Details";
+}
+
+@using (Html.BeginForm("Index", "Home", FormMethod.Post))
+{
+    @Html.Partial("_HeaderNavbar", Model.guardianFilter);
 }
 
 <div class="row justify-content-center">
@@ -16,16 +21,16 @@
 <div style="font-family: philosopher">
 
     <div class="row justify-content-center">
-        <h2>@Html.Raw(Model.headline)</h2>
+        <h2>@Html.Raw(Model.GuardianResults.fields.headline)</h2>
     </div>
     <div class="text-justify">
         <hr />
         <div class="row justify-content-center">
-            @Html.Raw(Model.main)
+            @Html.Raw(Model.GuardianResults.fields.main)
         </div>
 
         <hr />
-        @Html.Raw(Model.body)
+        @Html.Raw(Model.GuardianResults.fields.body)
     </div>
 
 </div>

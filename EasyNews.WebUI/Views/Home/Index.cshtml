@@ -1,9 +1,16 @@
-﻿@model EasyNews.Core.Models.GuardianJSON
+﻿@model EasyNews.Core.ViewModels.GuardianHomeViewModel
 @{
     ViewBag.Title = "Home Page";
 }
+<div>
 
-@foreach (var content in Model.response.results)
+</div>
+@using (Html.BeginForm("Index", "Home", FormMethod.Post))
+{
+    @Html.Partial("_HeaderNavbar", Model.GuardianFilter);
+}
+
+@foreach (var content in Model.Guardian.response.results)
 {
     <div class="row">
         <div class="col-2 text-center" style="background-color:bisque; color:brown">
@@ -39,8 +46,7 @@
                 Url.Action("Save", new { localID = content.localID, shortUrl = content.fields.shortUrl, actionName = "Index" }))
                        "
                    class="@(content.fields.isSaved == true ? "btn btn-danger" : "btn btn-success")"
-                   style="height:40px; align-self:center"
-                   >
+                   style="height:40px; align-self:center">
                     @Html.Raw(content.fields.isSaved == true ? "<i class='fas fa-minus-square'></i>" : "<i class='far fa-save'></i>")
                 </a>
             </div>
