@@ -11,5 +11,6 @@ namespace EasyNews.Core.Contracts
         T Find(string id);
         void Insert(T item);
         void Update(T item);
+        void Clear();
     }
 }

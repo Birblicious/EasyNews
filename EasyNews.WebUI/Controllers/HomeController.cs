@@ -14,145 +14,91 @@ namespace EasyNews.WebUI.Controllers
 {
     public class HomeController : Controller
     {
-        GuardianJSON guardianJSON;
-        
         IRepository<GuardianResults> repository;
         IRepository<GuardianFields> SQLRepository;
-        IRepository<GuardianFilterViewModel> filterRepository;
+        IRepository<GuardianFilterModel> filterRepository;
 
         public HomeController(
-            IRepository<GuardianResults> repository, 
+            IRepository<GuardianResults> repository,
             IRepository<GuardianFields> SQLRepository,
-            IRepository<GuardianFilterViewModel> filterRepository) {
+            IRepository<GuardianFilterModel> filterRepository)
+        {
             this.repository = repository;
             this.SQLRepository = SQLRepository;
             this.filterRepository = filterRepository;
         }
 
-        public PartialViewResult _HeaderNavbar()
-        {
-            return PartialView(filterRepository.Collection());
-        }
-
-        
         public ActionResult Index()
         {
             GuardianWebServices guardianServices = new GuardianWebServices();
-
+            GuardianHomeViewModel guardianHomeView = new GuardianHomeViewModel();
             using (WebClient web = new WebClient())
             {
                 web.Encoding = Encoding.UTF8;
-
-                string url = guardianServices.getJSONUrl(
-                   null,
-                   null,
-                   null,
-                   "10");
-
+                string url = guardianServices.getJSONUrl();
                 var json = web.DownloadString(url);
-
                 GuardianJSON guardianJSON = JsonConvert.DeserializeObject<GuardianJSON>(json);
-
-                foreach (var content in guardianJSON.response.results)
+                guardianHomeView.Guardian = guardianServices.FillGuardianJSONModel(guardianJSON, SQLRepository, repository);
+                guardianHomeView.GuardianFilter = new GuardianFilterModel();
+                if (filterRepository.Collection().Count() == 0)
                 {
-
-                    if (content.fields.bodyText.Length > 1000) { content.fields.screenStory = content.fields.bodyText.Substring(0, 1000) + "..."; }
-                    else if (content.fields.bodyText.Length > 750) { content.fields.screenStory = content.fields.bodyText.Substring(0, 750) + "..."; }
-                    else if (content.fields.bodyText.Length > 500) { content.fields.screenStory = content.fields.bodyText.Substring(0, 500) + "..."; }
-                    else if (content.fields.bodyText.Length > 250) { content.fields.screenStory = content.fields.bodyText.Substring(0, 250) + "..."; }
-                    else { content.fields.screenStory = "..."; } //content.fields.bodyText.Substring(0, 10) +
-
-                    if (SQLRepository.Find(content.fields.shortUrl) != null)
-                    {
-                        content.fields.isSaved = true;
-                    }
-                    else
-                    {
-                        content.fields.isSaved = false;
-                    }
-                    content.shortUrl = content.fields.shortUrl;
-                    content.fields.sectionId = content.sectionId;
-                    if (content.fields.thumbnail == null) {
-                        content.fields.thumbnail = "https://images.pexels.com/photos/1095602/pexels-photo-1095602.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260";
-                    }
-
-                    if (content.fields.trailText == null)
-                    {
-                        content.fields.trailText = "Pretty old stuff fam!";
-                    }
-                    repository.Insert(content);
+                    filterRepository.Insert(guardianHomeView.GuardianFilter);
+                    filterRepository.Commit();
                 }
-                repository.Commit();
-                this.guardianJSON = guardianJSON;
+                else
+                {
+                    guardianHomeView.GuardianFilter = filterRepository.Collection().First();
+                    guardianHomeView.GuardianFilter.OrderBy.ClickedOrderByItem = null;
+                    guardianHomeView.GuardianFilter.Sections.ClickedSectionList = null;
+                    guardianHomeView.GuardianFilter.SearchContent = null;
+                    guardianHomeView.GuardianFilter.PageSize = 50;
+                    filterRepository.Update(guardianHomeView.GuardianFilter);
+                    filterRepository.Commit();
+                }
             }
-            return View(guardianJSON);
+            return View(guardianHomeView);
         }
 
         [HttpPost]
-        public ActionResult Index(GuardianFilterViewModel models)
+        public ActionResult Index(GuardianFilterModel guardianFilter)
         {
             GuardianWebServices guardianServices = new GuardianWebServices();
-
+            GuardianHomeViewModel guardianHomeView = new GuardianHomeViewModel();
             using (WebClient web = new WebClient())
             {
                 web.Encoding = Encoding.UTF8;
-
                 string url = guardianServices.getJSONUrl(
-                    models.SearchContent,
-                    models.Sections.ClickedSectionList,
-                    models.OrderBy.ClickedOrderByItem,
-                    models.PageSize.ToString());
-
+                    guardianFilter.SearchContent,
+                    guardianFilter.Sections.ClickedSectionList,
+                    guardianFilter.OrderBy.ClickedOrderByItem,
+                    guardianFilter.PageSize.ToString());
                 var json = web.DownloadString(url);
-
                 GuardianJSON guardianJSON = JsonConvert.DeserializeObject<GuardianJSON>(json);
-                
-                foreach (var content in guardianJSON.response.results) {
-
-                    if (content.fields.bodyText.Length > 1000){ content.fields.screenStory = content.fields.bodyText.Substring(0, 1000) + "..."; }
-                    else if (content.fields.bodyText.Length > 750) { content.fields.screenStory = content.fields.bodyText.Substring(0, 750) + "..."; }
-                    else if (content.fields.bodyText.Length > 500) { content.fields.screenStory = content.fields.bodyText.Substring(0, 500) + "..."; }
-                    else if (content.fields.bodyText.Length > 250) { content.fields.screenStory = content.fields.bodyText.Substring(0, 250) + "..."; }
-                    else { content.fields.screenStory =  "..."; } //content.fields.bodyText.Substring(0, 10) +
-
-
-
-                    if (SQLRepository.Find(content.fields.shortUrl) != null)
-                    {
-                        content.fields.isSaved = true;
-                    }
-                    else
-                    {
-                        content.fields.isSaved = false;
-                    }
-                    content.shortUrl = content.fields.shortUrl;
-                    content.fields.sectionId = content.sectionId;
-                    if (content.fields.thumbnail == null)
-                    {
-                        content.fields.thumbnail = "https://images.pexels.com/photos/1095602/pexels-photo-1095602.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260";
-                    }
-                    if (content.fields.trailText == null)
-                    {
-                        content.fields.trailText = "Pretty old stuff fam!";
-                    }
-                    repository.Insert(content);
-                }
-                repository.Commit();
-                this.guardianJSON = guardianJSON;
+                guardianHomeView.Guardian = guardianServices.FillGuardianJSONModel(guardianJSON, SQLRepository, repository);
+                guardianHomeView.GuardianFilter = filterRepository.Collection().First();
+                guardianHomeView.GuardianFilter.OrderBy.ClickedOrderByItem = guardianFilter.OrderBy.ClickedOrderByItem;
+                guardianHomeView.GuardianFilter.Sections.ClickedSectionList = guardianFilter.Sections.ClickedSectionList;
+                guardianHomeView.GuardianFilter.SearchContent = guardianFilter.SearchContent;
+                guardianHomeView.GuardianFilter.PageSize = guardianFilter.PageSize;
+                filterRepository.Update(guardianHomeView.GuardianFilter);
+                filterRepository.Commit();
             }
-            return View(guardianJSON);
+            return View(guardianHomeView);
         }
 
-            public ActionResult Details(string shortUrl)
+        public ActionResult Details(string shortUrl)
         {
-            GuardianResults result = repository.Find(shortUrl);
-            return View(result.fields);
+            GuardianDetailsViewModel guardianDetailsView = new GuardianDetailsViewModel();
+            guardianDetailsView.GuardianResults = repository.Find(shortUrl);
+            guardianDetailsView.guardianFilter = filterRepository.Collection().First();
+            return View(guardianDetailsView);
         }
 
         public ActionResult Save(string localID, string shortUrl)
         {
             GuardianResults result = repository.Find(shortUrl);
-            if (result != null) {
+            if (result != null)
+            {
                 //result.fields.shortUrl = result.id;
                 result.fields.isSaved = true;
                 SQLRepository.Insert(result.fields);
@@ -176,9 +122,37 @@ namespace EasyNews.WebUI.Controllers
             return RedirectToAction(actionName);
         }
 
-        public ActionResult SavedNews() {
-            List<GuardianFields> allContent = SQLRepository.Collection().ToList();
-            return View(allContent);
+        public ActionResult SavedNews()
+        {
+            GuardianSavedNewsViewModel guardianSavedNewsView = new GuardianSavedNewsViewModel();
+            guardianSavedNewsView.GuardianFields = SQLRepository.Collection().ToList();
+            return View(guardianSavedNewsView);
+        }
+
+        [HttpPost]
+        public ActionResult SavedNews(GuardianSavedNewsViewModel model) {
+
+            string section = model.Sections.ToString();
+
+            switch (section.ToLower()) {
+                case "uknews":
+                    section = "uk-news";
+                    break;
+                case "globaldevelopment":
+                    section = "global-development";
+                    break;
+                default:
+                    break;
+            }
+
+            GuardianSavedNewsViewModel guardianSavedNewsView = new GuardianSavedNewsViewModel();
+
+            if (section.ToLower() != "all")
+                guardianSavedNewsView.GuardianFields = SQLRepository.Collection().Where(p => p.sectionId == section).ToList();
+            else
+                guardianSavedNewsView.GuardianFields = SQLRepository.Collection().ToList();
+
+            return View(guardianSavedNewsView);
         }
 
         public ActionResult SavedNewsDetails(string shortUrl)

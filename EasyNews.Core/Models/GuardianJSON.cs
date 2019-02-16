@@ -82,4 +82,6 @@ namespace EasyNews.Core.Models
         public string sectionId { get; set; }
         public bool isSaved { get; set; }
     }
+
+
 }

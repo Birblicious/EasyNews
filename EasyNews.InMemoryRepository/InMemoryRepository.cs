@@ -73,5 +73,11 @@ namespace EasyNews.InMemoryRepository
         {
             return items.AsQueryable();
         }
+
+        public void Clear() {
+            if (items != null) {
+                items.Clear();
+            }
+        }
     }
 }

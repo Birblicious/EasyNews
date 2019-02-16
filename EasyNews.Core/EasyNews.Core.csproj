@@ -48,7 +48,10 @@
     <Compile Include="Models\BaseModel.cs" />
     <Compile Include="Models\GuardianJSON.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="ViewModels\GuardianFilterViewModel.cs" />
+    <Compile Include="Models\GuardianFilterModel.cs" />
+    <Compile Include="ViewModels\GuardianDetailsViewModel.cs" />
+    <Compile Include="ViewModels\GuardianHomeViewModel.cs" />
+    <Compile Include="ViewModels\GuardianSavedNewsViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Resources\nullThumbnail.png" />
