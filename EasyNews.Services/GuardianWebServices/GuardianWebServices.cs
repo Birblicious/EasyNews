@@ -13,7 +13,7 @@ namespace EasyNews.Services.GuardianWebServices
 {
     public class GuardianWebServices
     {
-        public string getJSONUrl(string searchArea = null, string sectionArea = null, string orderByArea = null, string pageSize = "10") {
+        public string getJSONUrl(string searchArea = null, string sectionArea = null, string orderByArea = null, string pageSize = "50") {
             GuardianWebConstants constants = new GuardianWebConstants();
             string urlToReturn = string.Format(constants.getWebUrl());
             string apiKey = string.Format(constants.getApiKey());

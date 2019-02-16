@@ -51,7 +51,7 @@ namespace EasyNews.WebUI.Controllers
                     guardianHomeView.GuardianFilter.OrderBy.ClickedOrderByItem = null;
                     guardianHomeView.GuardianFilter.Sections.ClickedSectionList = null;
                     guardianHomeView.GuardianFilter.SearchContent = null;
-                    guardianHomeView.GuardianFilter.PageSize = 10;
+                    guardianHomeView.GuardianFilter.PageSize = 50;
                     filterRepository.Update(guardianHomeView.GuardianFilter);
                     filterRepository.Commit();
                 }
@@ -124,8 +124,35 @@ namespace EasyNews.WebUI.Controllers
 
         public ActionResult SavedNews()
         {
-            List<GuardianFields> allContent = SQLRepository.Collection().ToList();
-            return View(allContent);
+            GuardianSavedNewsViewModel guardianSavedNewsView = new GuardianSavedNewsViewModel();
+            guardianSavedNewsView.GuardianFields = SQLRepository.Collection().ToList();
+            return View(guardianSavedNewsView);
+        }
+
+        [HttpPost]
+        public ActionResult SavedNews(GuardianSavedNewsViewModel model) {
+
+            string section = model.Sections.ToString();
+
+            switch (section.ToLower()) {
+                case "uknews":
+                    section = "uk-news";
+                    break;
+                case "globaldevelopment":
+                    section = "global-development";
+                    break;
+                default:
+                    break;
+            }
+
+            GuardianSavedNewsViewModel guardianSavedNewsView = new GuardianSavedNewsViewModel();
+
+            if (section.ToLower() != "all")
+                guardianSavedNewsView.GuardianFields = SQLRepository.Collection().Where(p => p.sectionId == section).ToList();
+            else
+                guardianSavedNewsView.GuardianFields = SQLRepository.Collection().ToList();
+
+            return View(guardianSavedNewsView);
         }
 
         public ActionResult SavedNewsDetails(string shortUrl)

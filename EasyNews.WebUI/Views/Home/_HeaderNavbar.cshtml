@@ -1,45 +1,45 @@
 ﻿@model EasyNews.Core.Models.GuardianFilterModel
 
-    <nav class="navbar navbar-expand-lg fixed-top navbar-dark bg-info">
-        <a class="navbar-brand" href="#" style="font-family:philosopher"><i class="far fa-newspaper"></i> EasyNews</a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
+<nav class="navbar navbar-expand-lg fixed-top navbar-dark bg-info">
+    <a class="navbar-brand" href="#" style="font-family:philosopher"><i class="far fa-newspaper"></i> EasyNews</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
 
-        <div class="collapse navbar-collapse" id="navbarSupportedContent">
-            <div class="btn-group mr-auto">
-                <a id="btnHome" href="@Url.Action("Index")" class="btn btn-light">Home</a>
-                <a id="btnSavedNews" href="@Url.Action("SavedNews")" class="btn btn-light">Saved News</a>
-            </div>
-
-
-            <div style="margin-right:20px">
-                @Html.EditorFor(model => model.SearchContent, new { htmlAttributes = new { @class = "form-control", placeholder = "Search Here" } })
-            </div>
-            <div style="margin-right:20px">
-                @Html.DropDownListFor(model => model.Sections.ClickedSectionList, new SelectList(Model.SectionList, "ClickedSectionList", "ClickedSectionList"), new { @class = "custom-select" })
-            </div>
-            <div style="margin-right:20px">
-                @Html.DropDownListFor(model => model.OrderBy.ClickedOrderByItem, new SelectList(Model.OrderByList, "ClickedOrderByItem", "ClickedOrderByItem"), new { @class = "custom-select" })
-            </div>
-            <div style="margin-right:20px">
-                @Html.EditorFor(model => model.PageSize, new { htmlAttributes = new { @class = "form-control", placeholder = "Per Page" } })
-            </div>
-            <button id="submitAll" class="btn btn-dark my-2 my-sm-0" name="button" type="submit">Search</button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <div class="btn-group mr-auto">
+            <a id="btnHome" href="@Url.Action("Index")" class="btn btn-light">Home</a>
+            <a id="btnSavedNews" href="@Url.Action("SavedNews")" class="btn btn-light">Saved News</a>
         </div>
-    </nav>
-    <hr />
 
-    <div class="row justify-content-center">
-        <button id="errorToolTip" type="button" class="btn btn-warning" data-toggle="tooltip"
-                data-placement="bottom" data-html="true" style="display:none; margin-right:20px">
-            Invalid Input <i class="fas fa-chevron-circle-down"></i>
-        </button>
-        <!--
-            <div id="errorField" class="alert alert-danger col-2 align-self-end" style="display:none"></div>
-        -->
+        <div style="margin-right:20px">
+            @Html.EditorFor(model => model.SearchContent, new { htmlAttributes = new { @class = "form-control", placeholder = "Search Here" } })
+        </div>
+        <div style="margin-right:20px">
+            @Html.DropDownListFor(model => model.Sections.ClickedSectionList, new SelectList(Model.SectionList, "ClickedSectionList", "ClickedSectionList"), new { @class = "custom-select" })
+        </div>
+        <div style="margin-right:20px">
+            @Html.DropDownListFor(model => model.OrderBy.ClickedOrderByItem, new SelectList(Model.OrderByList, "ClickedOrderByItem", "ClickedOrderByItem"), new { @class = "custom-select" })
+        </div>
+        <div style="margin-right:20px">
+            @Html.EditorFor(model => model.PageSize, new { htmlAttributes = new { @class = "form-control", placeholder = "Per Page" } })
+        </div>
+        <button id="submitAll" class="btn btn-dark my-2 my-sm-0" name="button" type="submit">Search</button>
     </div>
+</nav>
+<hr />
 
+<div class="row justify-content-center">
+    <button id="errorToolTip" type="button" class="btn btn-warning" data-toggle="tooltip"
+            data-placement="bottom" data-html="true" style="display:none; margin-right:20px">
+        Invalid Input <i class="fas fa-chevron-circle-down"></i>
+    </button>
+    <!--
+        <div id="errorField" class="alert alert-danger col-2 align-self-end" style="display:none"></div>
+    -->
+</div>
+
+@section scripts {
     <script type="text/javascript">
 
         var items = {
@@ -68,3 +68,5 @@
         });
 
     </script>
+}
+

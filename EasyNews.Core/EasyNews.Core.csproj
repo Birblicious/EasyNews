@@ -51,6 +51,7 @@
     <Compile Include="Models\GuardianFilterModel.cs" />
     <Compile Include="ViewModels\GuardianDetailsViewModel.cs" />
     <Compile Include="ViewModels\GuardianHomeViewModel.cs" />
+    <Compile Include="ViewModels\GuardianSavedNewsViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Resources\nullThumbnail.png" />
